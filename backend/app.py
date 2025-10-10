@@ -29,6 +29,11 @@ def create_app():
     from routes.todo_routes import todo_bp
     app.register_blueprint(todo_bp, url_prefix='/api')
     
+    # Health check endpoint
+    @app.route('/api/health')
+    def health_check():
+        return {'status': 'healthy', 'message': 'Flask backend is running'}, 200
+    
     return app
 
 if __name__ == '__main__':

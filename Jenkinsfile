@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         // Docker Registry Configuration
-        DOCKER_REGISTRY = 'todoapp'  // Change to your Docker Hub username
+        DOCKER_REGISTRY = 'malinda699'  // Your Docker Hub username
         IMAGE_TAG = "${BUILD_NUMBER}"
         
         // AWS Configuration
@@ -144,8 +144,8 @@ pipeline {
                             sh """
                                 ssh -o StrictHostKeyChecking=no -i \${SSH_KEY} ec2-user@${instanceIP} '
                                     # Pull latest images
-                                    docker pull ${DOCKER_REGISTRY}/todo-app-backend:${IMAGE_TAG}
-                                    docker pull ${DOCKER_REGISTRY}/todo-app-frontend:${IMAGE_TAG}
+                                    docker pull malinda699/todo-app-backend:${IMAGE_TAG}
+                                    docker pull malinda699/todo-app-frontend:${IMAGE_TAG}
                                     
                                     # Stop existing containers
                                     docker-compose -p todoapp down || true
@@ -155,7 +155,7 @@ pipeline {
 version: "3.8"
 services:
   backend:
-    image: ${DOCKER_REGISTRY}/todo-app-backend:${IMAGE_TAG}
+    image: malinda699/todo-app-backend:${IMAGE_TAG}
     container_name: todo-backend
     restart: unless-stopped
     environment:
@@ -174,7 +174,7 @@ services:
       retries: 3
 
   frontend:
-    image: ${DOCKER_REGISTRY}/todo-app-frontend:${IMAGE_TAG}
+    image: malinda699/todo-app-frontend:${IMAGE_TAG}
     container_name: todo-frontend
     restart: unless-stopped
     environment:
