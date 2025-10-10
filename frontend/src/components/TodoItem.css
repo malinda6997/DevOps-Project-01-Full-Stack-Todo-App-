@@ -1,0 +1,260 @@
+/* TodoItem.css - Modern, responsive todo item styling */
+
+.todo-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.todo-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-color);
+}
+
+.todo-item.completed {
+  opacity: 0.7;
+  background: var(--completed-bg);
+}
+
+.todo-item.loading {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.todo-item.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.todo-content {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.check-button {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.check-button:hover {
+  border-color: var(--primary-color);
+  background: var(--primary-color-light);
+}
+
+.check-button.checked {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.todo-text {
+  flex: 1;
+}
+
+.todo-title {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+  transition: all 0.3s ease;
+}
+
+.todo-title.completed-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.todo-description {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  transition: all 0.3s ease;
+}
+
+.todo-description.completed-text {
+  color: var(--text-muted);
+}
+
+.todo-date {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.edit-form {
+  flex: 1;
+}
+
+.edit-title {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  background: var(--input-bg);
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  transition: border-color 0.2s ease;
+}
+
+.edit-title:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.edit-description {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  background: var(--input-bg);
+  color: var(--text-secondary);
+  resize: vertical;
+  min-height: 60px;
+  transition: border-color 0.2s ease;
+  font-family: inherit;
+}
+
+.edit-description:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.todo-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.action-button {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.action-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.action-button.edit {
+  background: var(--edit-bg);
+  color: var(--edit-color);
+}
+
+.action-button.edit:hover:not(:disabled) {
+  background: var(--edit-hover);
+  transform: scale(1.05);
+}
+
+.action-button.delete {
+  background: var(--delete-bg);
+  color: var(--delete-color);
+}
+
+.action-button.delete:hover:not(:disabled) {
+  background: var(--delete-hover);
+  transform: scale(1.05);
+}
+
+.action-button.save {
+  background: var(--success-bg);
+  color: var(--success-color);
+}
+
+.action-button.save:hover:not(:disabled) {
+  background: var(--success-hover);
+  transform: scale(1.05);
+}
+
+.action-button.cancel {
+  background: var(--cancel-bg);
+  color: var(--cancel-color);
+}
+
+.action-button.cancel:hover:not(:disabled) {
+  background: var(--cancel-hover);
+  transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .todo-item {
+    padding: 16px;
+    gap: 12px;
+  }
+  
+  .todo-title {
+    font-size: 16px;
+  }
+  
+  .action-button {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .edit-title, .edit-description {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .todo-item {
+    padding: 12px;
+    gap: 10px;
+  }
+  
+  .todo-actions {
+    gap: 6px;
+  }
+  
+  .action-button {
+    width: 28px;
+    height: 28px;
+  }
+}
