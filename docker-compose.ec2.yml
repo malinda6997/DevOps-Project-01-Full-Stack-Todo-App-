@@ -1,0 +1,46 @@
+version: '3.8'
+
+# Docker Compose for EC2 Deployment
+# EC2 IP: 107.20.98.202
+services:
+  mongodb:
+    image: mongo:6.0
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: todoapp
+    volumes:
+      - mongodb_data:/data/db
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./backend/.env
+    environment:
+      MONGO_URI: "mongodb://admin:admin123@mongodb:27017/todoapp?authSource=admin"
+      FLASK_ENV: "production"
+      HOST: "0.0.0.0"
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: 
+      context: ./frontend
+      args:
+        - REACT_APP_API_URL=http://107.20.98.202:5000/api
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      - REACT_APP_API_URL=http://107.20.98.202:5000/api
+    depends_on:
+      - backend
+
+volumes:
+  mongodb_data:

@@ -13,8 +13,17 @@ def create_app():
     """Create and configure Flask app"""
     app = Flask(__name__)
     
-    # Enable CORS
-    CORS(app)
+    # Enable CORS for EC2 deployment and local development
+    CORS(app, resources={
+        r"/api/*": {
+            "origins": [
+                "http://localhost:3000",
+                "http://127.0.0.1:3000",
+                "http://107.20.98.202:3000",
+                "http://107.20.98.202"
+            ]
+        }
+    })
     
     # Configuration
     app.config['MONGO_URI'] = os.getenv('MONGO_URI')
