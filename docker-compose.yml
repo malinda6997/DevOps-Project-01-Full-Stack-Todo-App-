@@ -1,0 +1,40 @@
+version: '3.8'
+
+# Simple docker-compose for local development
+# Order: mongodb -> backend -> frontend
+services:
+  mongodb:
+    image: mongo:6.0
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: todoapp
+    volumes:
+      - mongodb_data:/data/db
+
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    # Use backend's .env for app-specific settings, but override MONGO_URI
+    env_file:
+      - ./backend/.env
+    environment:
+      MONGO_URI: "mongodb://admin:admin123@mongodb:27017/todoapp?authSource=admin"
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  mongodb_data:
+
+# single bridge network is used by default by compose; left implicit for simplicity
