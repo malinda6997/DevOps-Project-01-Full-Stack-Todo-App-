@@ -1,5 +1,3 @@
-version: '3.8'
-
 # Simple docker-compose for local development
 # Order: mongodb -> backend -> frontend
 services:

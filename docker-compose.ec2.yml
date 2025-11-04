@@ -1,5 +1,3 @@
-version: '3.8'
-
 # Docker Compose for EC2 Deployment
 # EC2 IP: 107.20.98.202
 services:
